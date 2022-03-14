@@ -23,21 +23,29 @@ class _PesquisaPokemonState extends State<PesquisaPokemon> {
   var pokemon = Pokemon();
 
   void exibir() async {
-    pokemon = (await ConectarPokemon().fetch(nomePoke.text));
 
-    id = pokemon.id!;
-    nome = pokemon.name!;
-    img = pokemon.sprites!.other!.officialArtwork!.frontDefault!;
-    altura = pokemon.height!;
-    peso = pokemon.weight!;
+    try {
+      pokemon = (await ConectarPokemon().fetch(nomePoke.text));
 
-    setState(() {
-      id;
-      nome;
-      img;
-      altura;
-      peso;
-    });
+      id = pokemon.id!;
+      nome = pokemon.name!;
+      img = pokemon.sprites!.other!.officialArtwork!.frontDefault!;
+      altura = pokemon.height!;
+      peso = pokemon.weight!;
+
+      setState(() {
+        id;
+        nome;
+        img;
+        altura;
+        peso;
+      });
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+    }
   }
 
   @override
@@ -89,7 +97,7 @@ class _PesquisaPokemonState extends State<PesquisaPokemon> {
               const SizedBox(
                 height:8,
               ),
-              Text("Peso: " + peso.toString().padLeft(3, '0,'), textAlign: TextAlign.center,
+              Text("Peso: " + peso.toString().padLeft(4, '0,'), textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 16)),
               Padding(
                   padding:
