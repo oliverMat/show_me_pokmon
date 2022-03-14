@@ -14,39 +14,14 @@ class PesquisaPokemon extends StatefulWidget {
 class _PesquisaPokemonState extends State<PesquisaPokemon> {
   final nomePoke = TextEditingController();
 
+  var pokemon = Pokemon();
+
   int id = 0;
   String nome = '';
   String img = '';
   int altura = 0;
   int peso = 0;
-
-  var pokemon = Pokemon();
-
-  void exibir() async {
-
-    try {
-      pokemon = (await ConectarPokemon().fetch(nomePoke.text));
-
-      id = pokemon.id!;
-      nome = pokemon.name!;
-      img = pokemon.sprites!.other!.officialArtwork!.frontDefault!;
-      altura = pokemon.height!;
-      peso = pokemon.weight!;
-
-      setState(() {
-        id;
-        nome;
-        img;
-        altura;
-        peso;
-      });
-
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.toString()),
-      ));
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -117,5 +92,31 @@ class _PesquisaPokemonState extends State<PesquisaPokemon> {
             ],
           )),
     );
+  }
+
+  void exibir() async {// realiza a exibicao dos dados
+
+    try {
+      pokemon = (await ConectarPokemon().fetch(nomePoke.text));
+
+      id = pokemon.id!;
+      nome = pokemon.name!;
+      img = pokemon.sprites!.other!.officialArtwork!.frontDefault!;
+      altura = pokemon.height!;
+      peso = pokemon.weight!;
+
+      setState(() {
+        id;
+        nome;
+        img;
+        altura;
+        peso;
+      });
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+    }
   }
 }
